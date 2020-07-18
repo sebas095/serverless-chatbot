@@ -1,7 +1,9 @@
-import React, { useState, createRef } from "react";
+import React, { useState, createRef, useEffect } from "react";
 
 import InputText from "./InputText";
 import MessageList from "./MessageList";
+
+import sendMessageApi from "../../utils/api.service";
 
 const initMessage = {
   user: "bot",
@@ -12,9 +14,15 @@ const Chat = () => {
   const [messages, setMessages] = useState([initMessage]);
   const messagesRef = createRef();
 
-  const sendMessage = (message) => {
-    setMessages([...messages, { message, user: "human" }]);
-    //TODO
+  useEffect(() => {
+    scrollToBottom();
+  }, [messages]);
+
+  const sendMessage = async (message) => {
+    //setMessages([...messages, { message, user: "human" }]);
+
+    const result = await sendMessageApi(message);
+    setMessages([...messages, { message, user: "human" }, result]);
   };
 
   const scrollToBottom = () => {
