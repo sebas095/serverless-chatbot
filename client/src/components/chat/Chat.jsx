@@ -19,10 +19,10 @@ const Chat = () => {
   }, [messages]);
 
   const sendMessage = async (message) => {
-    //setMessages([...messages, { message, user: "human" }]);
+    setMessages([...messages, { message, user: "human" }]);
 
     const result = await sendMessageApi(message);
-    setMessages([...messages, { message, user: "human" }, result]);
+    setMessages((prev) => [...prev, result]);
   };
 
   const scrollToBottom = () => {
